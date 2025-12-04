@@ -1,6 +1,4 @@
-﻿using ctrlcctrlv.Models;
-
-namespace ctrlcctrlv.Models
+﻿namespace ctrlcctrlv.Models
 {
     public class Materia
     {
