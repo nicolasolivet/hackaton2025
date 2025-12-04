@@ -2,25 +2,16 @@
 {
     public class Persona
     {
-        public int Dni { get; set; }
-        public string Nombre { get; set; }
-        public string Apellido { get; set; } 
+        public int dni { get; set; }        // PK general para todas las personas
+        public string nombre { get; set; } = string.Empty;
+        public string apellido { get; set; } = string.Empty;
 
+        public string email { get; set; } = string.Empty;
 
+        public int rol { get; set; }
 
-        //prueba commit
+        public bool estado { get; set; }
 
-
-    
-    
-        //void setDni(int dni)
-        //{
-        //    _dni = dni;
-        //}
-
-        //int getDni()
-        //{
-        //    return _dni
-        //}
+        public Persona() { }
     }
 }

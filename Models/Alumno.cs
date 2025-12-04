@@ -1,14 +1,18 @@
 ﻿namespace ctrlcctrlv.Models
 {
-    public class Alumno
+    public class Alumno : Persona
     {
-        public int Dni { get; set;}
-        
-        //FK propiedad de navegacion base de datos
-        public int CursoId { get; set; }
-        public Curso Curso { get; set; }
-        public int IdTutor { get; set; }
-        public Tutor Tutor { get; set;  }
+        private int dniAlumno;
 
+        public Alumno(int dniAlumno, string nombre, string apellido, string email, int rol, bool estado)
+        {
+            this.dniAlumno = dniAlumno;
+            this.nombre = nombre;
+            this.apellido = apellido;
+            this.email = email;
+            this.rol = rol;
+            this.estado = estado;
+        }
     }
 }
+
