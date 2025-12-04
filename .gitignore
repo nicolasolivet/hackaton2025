@@ -1,0 +1,21 @@
+## Visual Studio / .NET
+.vs/
+bin/
+obj/
+*.user
+*.suo
+*.cache
+*.log
+
+# Build artifacts
+*.dll
+*.exe
+*.pdb
+
+# Rider / VSCode
+.idea/
+.vscode/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
