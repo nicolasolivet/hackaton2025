@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 18.0.11222.15 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ctrlcctrlv", "ctrlcctrlv.csproj", "{92B758AD-CF3C-49BB-93FD-75C8F8EF6CF8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C0B018F3-8BC2-41DA-A6B6-BFC8418226F0} = {C0B018F3-8BC2-41DA-A6B6-BFC8418226F0}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIhackaton", "..\APIhackaton\APIhackaton.csproj", "{C0B018F3-8BC2-41DA-A6B6-BFC8418226F0}"
 EndProject
