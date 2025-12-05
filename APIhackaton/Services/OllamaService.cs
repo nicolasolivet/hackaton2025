@@ -22,9 +22,15 @@ namespace APIhackaton.Services
         {
             // 1) Get models
             var modelsResp = await _httpClient.GetAsync("/v1/models");
-            modelsResp.EnsureSuccessStatusCode();
-            using var modelsStream = await modelsResp.Content.ReadAsStreamAsync();
-            using var modelsDoc = await JsonDocument.ParseAsync(modelsStream);
+            string modelsBody = await modelsResp.Content.ReadAsStringAsync();
+            if (!modelsResp.IsSuccessStatusCode)
+            {
+                // Try a diagnostic fallback: maybe server exposes a different API path
+                // Provide a clear exception containing the status and body to help debugging.
+                throw new HttpRequestException($"GET /v1/models returned {(int)modelsResp.StatusCode}: {modelsBody}");
+            }
+
+            using var modelsDoc = JsonDocument.Parse(modelsBody);
 
             string modelId = null;
             if (modelsDoc.RootElement.TryGetProperty("data", out var data) && data.GetArrayLength() > 0)
@@ -47,9 +53,12 @@ namespace APIhackaton.Services
             var payload = JsonSerializer.Serialize(requestObj);
             using var content = new StringContent(payload, Encoding.UTF8, "application/json");
             var response = await _httpClient.PostAsync("/v1/chat/completions", content);
-            response.EnsureSuccessStatusCode();
-
             var respText = await response.Content.ReadAsStringAsync();
+            if (!response.IsSuccessStatusCode)
+            {
+                // If 404, include response body to help identify correct path
+                throw new HttpRequestException($"POST /v1/chat/completions returned {(int)response.StatusCode}: {respText}");
+            }
 
             try
             {

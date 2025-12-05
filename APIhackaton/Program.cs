@@ -1,4 +1,5 @@
 using APIhackaton.Services;
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
@@ -33,6 +34,8 @@ namespace APIhackaton
             builder.Services.AddHttpClient<OllamaService>(client =>
             {
                 client.BaseAddress = new Uri("http://localhost:11434/"); // Cambia la URL si tu instancia de Ollama est� en otro lugar
+                // Increase timeout to accommodate longer model generation times (default is 100s)
+                client.Timeout = TimeSpan.FromMinutes(10);
             });
 
             var app = builder.Build();
