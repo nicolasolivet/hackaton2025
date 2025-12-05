@@ -8,6 +8,22 @@ namespace ctrlcctrlv.Controllers
 {
     public class TutoresController : Controller
     {
+        // GET: /Tutores/Index
+        public IActionResult Index()
+        {
+            var usuario = HttpContext.Session.GetString("UsuarioLogueado");
+            if (string.IsNullOrEmpty(usuario))
+            {
+                // Redirigir a Login y luego volver a MenuTutor
+                return RedirectToAction("Login", "Account", new { returnUrl = "/Tutores/MenuTutor" });
+            }
+
+            // Si está logueado, mostrar la acción MenuTutor
+            return RedirectToAction("MenuTutor");
+        }
+
+
+
         // CONTROLADOR SIN BD - MOCKS
         // Versión extendida para calificaciones trimestrales, gráficas, timeline y alertas.
 
