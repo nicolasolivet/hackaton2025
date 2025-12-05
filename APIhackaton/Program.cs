@@ -1,4 +1,7 @@
-
+using APIhackaton.Services;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 namespace APIhackaton
 {
     public class Program
@@ -8,11 +11,22 @@ namespace APIhackaton
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
+            
             builder.Services.AddControllers();
+            // Allow the web app (served from ctrlcctrlv) to call this API during development
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(name: "AllowWeb",
+                    policy => policy.WithOrigins("http://localhost:5149").AllowAnyHeader().AllowAnyMethod());
+            });
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            
+            builder.Services.AddHttpClient<OllamaService>(client =>
+            {
+                client.BaseAddress = new Uri("http://localhost:11434/"); // Cambia la URL si tu instancia de Ollama est� en otro lugar
+            });
 
             var app = builder.Build();
 
@@ -22,6 +36,9 @@ namespace APIhackaton
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            // Enable CORS for the web app origin
+            app.UseCors("AllowWeb");
 
             app.UseAuthorization();
 

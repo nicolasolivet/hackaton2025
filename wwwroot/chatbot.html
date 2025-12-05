@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Chatbot</title>
+    <style>
+        #chat-window {
+            border: 1px solid #ccc;
+            padding: 10px;
+            height: 300px;
+            overflow-y: auto;
+            margin-bottom: 10px;
+        }
+
+        #user-input {
+            width: 80%;
+        }
+    </style>
+</head>
+<body>
+    <h2>Chatbot</h2>
+    <div id="chat-window"></div>
+    <input id="user-input" type="text" placeholder="Escribe tu mensaje..." />
+    <button id="send-btn">Enviar</button>
+
+    <script>const chatWindow = document.getElementById('chat-window');
+        const userInput = document.getElementById('user-input');
+        const sendBtn = document.getElementById('send-btn');
+
+        sendBtn.onclick = async function () {
+            const prompt = userInput.value;
+            if (!prompt) return;
+
+            chatWindow.innerHTML += `<div><b>Tú:</b> ${prompt}</div>`;
+            userInput.value = '';
+
+            const response = await fetch('http://localhost:5294/api/chat/ask', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ prompt })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                chatWindow.innerHTML += `<div><b>Bot:</b> ${data.reply}</div>`;
+                chatWindow.scrollTop = chatWindow.scrollHeight;
+            } else {
+                chatWindow.innerHTML += `<div style="color:red;"><b>Error al conectar con el bot.</b></div>`;
+            }
+        };</script>
+</body>
+</html>
