@@ -1,0 +1,81 @@
+﻿@{
+    ViewBag.Title = "Asistencias";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container asistencias-root">
+
+    <div class="row">
+        <div class="col-12">
+            <h2>Reporte de Inasistencias</h2>
+            <p class="text-muted">Historial por materia y curso.</p>
+        </div>
+    </div>
+
+    @{
+        var panels = ViewBag.Panels as List<(string Titulo, List<(string Fecha, string Estado, string Justificacion)> Filas)>
+        ?? new List<(string, List<(string, string, string)>)>
+        {
+        // Panel 1
+        ("Matemática - 3°A",
+        new List<(string, string, string)>
+        {
+        ("2025-12-01", "Presente", "-"),
+        ("2025-11-20", "Ausente", "Enfermedad")
+        }
+        ),
+
+        // Panel 2
+        ("Lengua - 3°A",
+        new List<(string, string, string)>
+        {
+        ("2025-12-01", "Presente", "-")
+        }
+        ),
+        };
+    }
+
+    @foreach (var panel in panels)
+    {
+        <div class="asistencia-panel">
+
+            <div class="panel-title">@panel.Titulo</div>
+
+            <div class="table-responsive mt-2">
+                <table class="table align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Estado</th>
+                            <th>Justificación</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var fila in panel.Filas)
+                        {
+                            <tr>
+                                <td>@fila.Fecha</td>
+
+                                <td>
+                                    @if (fila.Estado.ToLower().Contains("pres"))
+                                    {
+                                        <span class="asistencia-badge-presente">Presente</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="asistencia-badge-ausente">Ausente</span>
+                                    }
+                                </td>
+
+                                <td>
+                                    @(string.IsNullOrWhiteSpace(fila.Justificacion) ? "-" : fila.Justificacion)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+</div>

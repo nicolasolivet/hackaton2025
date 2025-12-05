@@ -14,7 +14,7 @@ namespace APIhackaton
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            
+
             builder.Services.AddControllers();
             // Allow the web app (served from ctrlcctrlv) to call this API during development
             builder.Services.AddCors(options =>
@@ -25,7 +25,7 @@ namespace APIhackaton
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            
+
             // Register EF Core DbContext (SQLite)
             builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlite("Data Source=app.db")
@@ -50,12 +50,10 @@ namespace APIhackaton
             // Enable CORS for the web app origin
             app.UseCors("AllowWeb");
 
-            app.UseAuthorization();
-
-
+            app.UseHttpsRedirection();
             app.MapControllers();
-
             app.Run();
+
         }
     }
 }

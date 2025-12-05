@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "Configuración";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container py-4">
+    <h2>Configuración</h2>
+    <form method="post" action="@Url.Action("Configuracion","Tutores")">
+        <div class="mb-3">
+            <label class="form-label">Nombre</label>
+            <input class="form-control" value="@User.Identity?.Name" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input class="form-control" value="tutor@mail.com" />
+        </div>
+        <button class="btn btn-primary">Guardar</button>
+    </form>
+</div>

@@ -1,0 +1,187 @@
+﻿@model ctrlcctrlv.Models.ViewModels.TutorMenuViewModel
+@{
+    ViewBag.Title = "Menu Tutor";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container min-vh-75 d-flex flex-column justify-content-center py-4">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h1 class="display-4 fw-light">BIENVENIDO, @Model.Tutor.nombre</h1>
+            <p class="text-muted">Área del tutor (persona a cargo)</p>
+        </div>
+    </div>
+
+    <!-- Top cards -->
+    <div class="row text-center my-4">
+        <div class="col-6 col-md-3 mb-3">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h6 class="card-title mb-0">Tareas</h6>
+                    <p class="card-text display-6">@Model.TotalTareasPendientes</p>
+                    <small class="text-muted">Pendientes</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3 mb-3">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h6 class="card-title mb-0">Mensajes</h6>
+                    <p class="card-text display-6">@Model.TotalMensajesNuevos</p>
+                    <small class="text-muted">Nuevos</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3 mb-3">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h6 class="card-title mb-0">Eventos</h6>
+                    <p class="card-text display-6">@Model.ProxEventos</p>
+                    <small class="text-muted">Próximos</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3 mb-3">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h6 class="card-title mb-0">Alumno</h6>
+                    <p class="card-text">@Model.AlumnoACargo?.nombre @Model.AlumnoACargo?.apellido</p>
+                    <small class="text-muted">Persona a cargo</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Segunda fila: calificaciones y alertas -->
+    <div class="row mt-3">
+        <div class="col-md-6 mb-3">
+            <div class="card p-3 h-100">
+                <h5>Calificaciones (Promedio por trimestre)</h5>
+                <div class="mt-3">
+                    @foreach (var p in Model.PromediosTrimestrales)
+                    {
+                        <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                            <div>@p.Trimestre</div>
+                            <div class="fw-bold">@p.Promedio.ToString("0.0")</div>
+                        </div>
+                    }
+                </div>
+                <div class="small text-muted mt-2">Resumen trimestral del alumno.</div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <div class="card p-3 h-100">
+                <h5>Alertas del alumno</h5>
+                <div class="mt-3">
+                    @if (Model.Alertas == null || Model.Alertas.Count == 0)
+                    {
+                        <div class="alert alert-success">Sin alertas importantes.</div>
+                    }
+                    else
+                    {
+                        foreach (var a in Model.Alertas)
+                        {
+                            var cls = a.Nivel == "danger" ? "alert-danger" :
+                            a.Nivel == "warning" ? "alert-warning" :
+                            a.Nivel == "success" ? "alert-success" : "alert-info";
+                            <div class="alert @cls">
+                                <strong>@a.Titulo</strong>
+                                <div>@a.Mensaje</div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Grid principal (tarjetas de acceso) -->
+    <div class="row justify-content-center mt-3">
+        <div class="col-12 col-lg-10">
+            <div class="row g-3">
+                <div class="col-6 col-md-4">
+                    <a href="@Url.Action("Alumno", "Tutores", new { dni = Model.AlumnoACargo?.dni ?? 0 })" class="text-decoration-none text-dark">
+                        <div class="card h-100 shadow-sm p-3 hover-lift">
+                            <h5 class="card-title">Alumno</h5>
+                            <p class="card-text">Información del estudiante, progreso y datos importantes.</p>
+                            <small class="text-muted">Ver alumno →</small>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-6 col-md-4">
+                    <a href="@Url.Action("Progreso", "Tutores", new { alumnoDni = Model.AlumnoACargo?.dni ?? 0 })" class="text-decoration-none text-dark">
+                        <div class="card h-100 shadow-sm p-3 hover-lift">
+                            <h5 class="card-title">Progreso Académico</h5>
+                            <p class="card-text">Ver cómo va el estudiante en cada materia.</p>
+                            <small class="text-muted">Ver progreso →</small>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-6 col-md-4">
+                    <a href="@Url.Action("Horarios", "Tutores", new { alumnoDni = Model.AlumnoACargo?.dni ?? 0 })" class="text-decoration-none text-dark">
+                        <div class="card h-100 shadow-sm p-3 hover-lift">
+                            <h5 class="card-title">Horarios y Calendario</h5>
+                            <p class="card-text">Fechas importantes y eventos.</p>
+                            <small class="text-muted">Ir al calendario →</small>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- resto de tarjetas igual que antes -->
+                <div class="col-6 col-md-4">
+                    <a href="@Url.Action("Comunicados", "Tutores")" class="text-decoration-none text-dark">
+                        <div class="card h-100 shadow-sm p-3 hover-lift">
+                            <h5 class="card-title">Comunicados</h5>
+                            <p class="card-text">Avisos y novedades del colegio.</p>
+                            <small class="text-muted">Ver comunicados →</small>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-6 col-md-4">
+                    <a href="@Url.Action("Mensajes", "Tutores")" class="text-decoration-none text-dark">
+                        <div class="card h-100 shadow-sm p-3 hover-lift">
+                            <h5 class="card-title">Mensajes con docentes</h5>
+                            <p class="card-text">Comunicate directamente con los profesores.</p>
+                            <small class="text-muted">Ir a mensajes →</small>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-6 col-md-4">
+                    <a href="@Url.Action("Asistencias", "Tutores", new { alumnoDni = Model.AlumnoACargo?.dni ?? 0 })" class="text-decoration-none text-dark">
+                        <div class="card h-100 shadow-sm p-3 hover-lift">
+                            <h5 class="card-title">Asistencias</h5>
+                            <p class="card-text">Control de presentes y ausencias.</p>
+                            <small class="text-muted">Ver asistencias →</small>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-6 col-md-4">
+                    <a href="@Url.Action("Tareas", "Tutores", new { alumnoDni = Model.AlumnoACargo?.dni ?? 0 })" class="text-decoration-none text-dark">
+                        <div class="card h-100 shadow-sm p-3 hover-lift">
+                            <h5 class="card-title">Tareas y deberes</h5>
+                            <p class="card-text">Tareas asignadas y estado de entrega.</p>
+                            <small class="text-muted">Ver tareas →</small>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-6 col-md-4">
+                    <a href="@Url.Action("Configuracion", "Tutores")" class="text-decoration-none text-dark">
+                        <div class="card h-100 shadow-sm p-3 hover-lift">
+                            <h5 class="card-title">Configuración</h5>
+                            <p class="card-text">Preferencias del tutor.</p>
+                            <small class="text-muted">Ajustes →</small>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
