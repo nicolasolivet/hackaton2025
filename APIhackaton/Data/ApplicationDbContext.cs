@@ -11,11 +11,11 @@ namespace APIhackaton.Data
         }
 
         // DbSets for the models
-        public DbSet<Alumno> Alumnos { get; set; }
-        public DbSet<Docente> Docentes { get; set; }
-        public DbSet<Tutor> Tutores { get; set; }
-        public DbSet<Materia> Materias { get; set; }
-        public DbSet<Curso> Cursos { get; set; }
+        public DbSet<Alumno> Alumnos { get; set; } = null!;
+        public DbSet<Docente> Docentes { get; set; } = null!;
+        public DbSet<Tutor> Tutores { get; set; } = null!;
+        public DbSet<Materia> Materias { get; set; } = null!;
+        public DbSet<Curso> Cursos { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
