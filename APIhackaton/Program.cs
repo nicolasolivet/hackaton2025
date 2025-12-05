@@ -1,5 +1,7 @@
+using APIhackaton.Data;
 using APIhackaton.Services;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 namespace APIhackaton
@@ -11,6 +13,10 @@ namespace APIhackaton
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            
+            // Configure Entity Framework Core with SQLite
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
             
             builder.Services.AddControllers();
             // Allow the web app (served from ctrlcctrlv) to call this API during development
