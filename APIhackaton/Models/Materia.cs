@@ -1,11 +1,15 @@
-﻿namespace APIhackaton.Models
+﻿using System.ComponentModel.DataAnnotations;
+namespace APIhackaton.Models
 
 {
     public class Materia
     {
-        public string codigo { get; set; }
+        [Key]
+        public string codigo { get; set; } = string.Empty;
 
-        public string nombre { get; set; }
+        public string nombre { get; set; } = string.Empty;
+
+        public Materia() { }
 
         public Materia(string codigo, string nombre)
         {

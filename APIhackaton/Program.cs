@@ -1,6 +1,8 @@
 using APIhackaton.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+using APIhackaton.Data;
 using Microsoft.Extensions.Hosting;
 namespace APIhackaton
 {
@@ -23,6 +25,11 @@ namespace APIhackaton
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             
+            // Register EF Core DbContext (SQLite)
+            builder.Services.AddDbContext<AppDbContext>(options =>
+                options.UseSqlite("Data Source=app.db")
+            );
+
             builder.Services.AddHttpClient<OllamaService>(client =>
             {
                 client.BaseAddress = new Uri("http://localhost:11434/"); // Cambia la URL si tu instancia de Ollama est� en otro lugar
