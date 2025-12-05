@@ -1,0 +1,40 @@
+﻿@model ctrlcctrlv.Models.ViewModels.AlumnoDetalleViewModel
+@{
+    ViewBag.Title = "Alumno";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container py-4">
+    <h2>Alumno: @Model.NombreCompleto</h2>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5>@Model.NombreCompleto</h5>
+                    <p><strong>DNI:</strong> @Model.Dni</p>
+                    <p><strong>Curso:</strong> @Model.Curso</p>
+                    <p><strong>Edad:</strong> @Model.Edad</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <h5>Promedios por materia</h5>
+            <table class="table">
+                <thead><tr><th>Materia</th><th>Promedio</th></tr></thead>
+                <tbody>
+                    @foreach (var kv in Model.PromediosPorMateria)
+                    {
+                        <tr><td>@kv.Key</td><td>@kv.Value</td></tr>
+                    }
+                </tbody>
+            </table>
+
+            <h5>Observaciones</h5>
+            <ul>
+                @foreach (var o in Model.Observaciones)
+                {
+                    <li>@o</li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>

@@ -1,31 +1,24 @@
-using System.Diagnostics;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ctrlcctrlv.Models;
 
-namespace ctrlcctrlv.Controllers;
-
-public class HomeController : Controller
+namespace ctrlcctrlv.Controllers
 {
-    private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger)
+    [Authorize] // exige autenticación para acceder al Index
+    public class HomeController : Controller
     {
-        _logger = logger;
-    }
+        // GET: /Home/Index (o /)
+        public IActionResult Index()
+        {
+            // Si querés redirigir a MenuTutor cuando ingrese el usuario, podes hacerlo aquí:
+            // return RedirectToAction("MenuTutor", "Tutores");
 
-    public IActionResult Index()
-    {
-        return View();
-    }
+            return View();
+        }
 
-    public IActionResult Privacy()
-    {
-        return View();
-    }
-
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        [AllowAnonymous]
+        public IActionResult Privacy()
+        {
+            return View();
+        }
     }
 }

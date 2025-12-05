@@ -1,0 +1,89 @@
+﻿@{
+    ViewBag.Title = "Horarios y calendario";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container cronograma-container">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="cronograma-header">Horarios y calendario</h2>
+            <p class="text-muted">Próximos eventos y horario semanal.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Horario semanal -->
+        <div class="col-12 col-md-6">
+            <div class="cronograma-card">
+                <div class="card-title">Horario semanal</div>
+                <ul class="cronograma-list">
+                    @{
+                        var lista = ViewBag.Horario as List<(string Dia, string Horario, string Descripcion)>
+                        ?? new List<(string, string, string)> {
+                                        ("Lunes","08:00 - 12:00","Clases presenciales"),
+                                        ("Martes","10:30 - 11:30","Reunión con tutor"),
+                                        ("Miércoles","08:00 - 12:00","Clases presenciales")
+                        };
+                    }
+                    @foreach (var item in lista)
+                    {
+                        <li>
+                            <div class="cronograma-time">@item.Dia<br /><small class="text-muted">@item.Horario</small></div>
+                            <div class="cronograma-desc">@item.Descripcion</div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+
+        <!-- Eventos -->
+        <div class="col-12 col-md-6">
+            <div class="cronograma-card">
+                <div class="card-title">Próximos eventos</div>
+                <ul class="cronograma-list">
+                    @{
+                        var eventos = ViewBag.Eventos as List<(string Fecha, string Titulo, string Detalle)>
+                        ?? new List<(string, string, string)> {
+                                        ("10/12/2025","Reunión de padres","18:00 - Aula Magna"),
+                                        ("20/12/2025","Entrega de boletines","Todas las divisiones")
+                        };
+                    }
+                    @foreach (var e in eventos)
+                    {
+                        <li>
+                            <div class="cronograma-time">@e.Fecha</div>
+                            <div class="cronograma-desc"><strong>@e.Titulo</strong><div class="text-muted">@e.Detalle</div></div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Timeline -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <h4>Línea de tiempo</h4>
+            <ul class="list-unstyled">
+                @{
+                    var timeline = ViewBag.Timeline as List<(string Fecha, string Titulo, string Descripcion)>
+                    ?? new List<(string, string, string)> {
+                                ("09/12/2025","Actividad de Matemática","Proyecto grupal"),
+                                ("10/12/2025","Reunión de padres","18:00 - Aula Magna"),
+                                ("20/12/2025","Entrega de boletines","Todas las divisiones")
+                    };
+                }
+                @foreach (var it in timeline)
+                {
+                    <li class="d-flex mb-3">
+                        <div style="min-width:110px;font-weight:600">@it.Fecha</div>
+                        <div>
+                            <div class="fw-bold">@it.Titulo</div>
+                            <div class="text-muted">@it.Descripcion</div>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
