@@ -1,31 +1,66 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
-public class AccountController : Controller
+namespace ctrlcctrlv.Controllers
 {
-    [HttpGet]
-    [AllowAnonymous]
-    public IActionResult Login(string returnUrl = "/")
+    public class AccountController : Controller
     {
-        ViewData["ReturnUrl"] = returnUrl;
-        return View();
-    }
-
-    [HttpPost]
-    [AllowAnonymous]
-    public async Task<IActionResult> Login(string username, string password, string returnUrl = "/")
-    {
-        // Aquí va la lógica de autenticación real (Identity o custom).
-        // Esto es solo ejemplo para redirigir cuando "logea".
-        if (username == "test" && password == "test")
+        // GET: /Account/Login
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Login(string returnUrl = "/")
         {
-            // hacer sign-in real con ClaimsPrincipal
-            return LocalRedirect(returnUrl);
+            ViewData["ReturnUrl"] = returnUrl;
+            return View();
         }
 
-        ModelState.AddModelError("", "Credenciales inválidas");
-        ViewData["ReturnUrl"] = returnUrl;
-        return View();
+        // POST: /Account/Login
+        [HttpPost]
+        [AllowAnonymous]
+        public IActionResult Login(string username, string password, string returnUrl = "/")
+        {
+            // Usuario de prueba (modo placeholder)
+            if (username == "test" && password == "test")
+            {
+                HttpContext.Session.SetString("UsuarioLogueado", username);
+                return LocalRedirect(returnUrl);
+            }
+
+            ModelState.AddModelError("", "Usuario o contraseña incorrectos (usar: test / test).");
+            ViewData["ReturnUrl"] = returnUrl;
+            return View();
+        }
+
+        // GET: /Account/Register
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        // POST: /Account/Register
+        [HttpPost]
+        [AllowAnonymous]
+        public IActionResult Register(string username, string password)
+        {
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+            {
+                ModelState.AddModelError("", "Completá todos los campos.");
+                return View();
+            }
+
+            // No guardamos nada aún. Solo simulamos que se creó.
+            TempData["RegisterMessage"] = "Cuenta creada correctamente. Ahora iniciá sesión.";
+
+            return RedirectToAction("Login");
+        }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Login");
+        }
     }
 }
