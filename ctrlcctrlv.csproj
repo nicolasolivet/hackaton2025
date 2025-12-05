@@ -13,4 +13,8 @@
     <None Remove="APIhackaton\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="APIhackaton\Controllers\" />
+  </ItemGroup>
+
 </Project>

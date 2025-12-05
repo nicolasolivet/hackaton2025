@@ -1,15 +1,13 @@
-﻿namespace APIhackaton.DTOs
+﻿
+namespace APIhackaton.DTOs
 {
-    public class Alumno 
+    public class Alumno
     {
         public int dniAlumno { get; set; }
-        public string nombre { get; set; }
-        public string apellido { get; set; }
-        public string email { get; set; }
+        public string nombre { get; set; } = string.Empty;
+        public string apellido { get; set; } = string.Empty;
+        public string email { get; set; } = string.Empty;
         public int rol { get; set; }
         public bool estado { get; set; }
-
-      
     }
 }
-
