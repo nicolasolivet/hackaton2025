@@ -1,0 +1,138 @@
+﻿@* Views/Shared/_AlumnoMenu.cshtml *@
+@using System.Linq
+
+@{
+    // Detectar item activo
+    string currentAction = ViewContext.RouteData.Values["action"]?.ToString() ?? "";
+    string currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? "";
+    Func<string, string, bool> isActive = (act, ctrl) =>
+        string.Equals(act, currentAction, StringComparison.OrdinalIgnoreCase)
+        && string.Equals(ctrl, currentController, StringComparison.OrdinalIgnoreCase);
+
+    // Contadores (si no vienen, 0)
+    var mensajes = (ViewBag.MensajesCount as int?) ?? 0;
+    var tareas = (ViewBag.TareasCount as int?) ?? 0;
+    var avisos = (ViewBag.AvisosCount as int?) ?? 0;
+    var faltas = (ViewBag.InasistenciasCount as int?) ?? 0;
+
+    // Datos del alumno (opcional)
+    var alumnoNombre = (ViewBag.AlumnoNombre as string) ?? "Nombre Alumno";
+    var alumnoId = (ViewBag.AlumnoId as string) ?? "ID 12345";
+    var avatarUrl = (ViewBag.AvatarUrl as string) ?? "";
+}
+
+<nav class="alumno-menu" aria-label="Menú del alumno">
+    <div class="alumno-menu-header">
+        <div class="alumno-avatar">
+            @if (!string.IsNullOrEmpty(avatarUrl))
+            {
+                <img src="@avatarUrl" alt="Avatar" />
+            }
+            else
+            {
+                @* Fallback svg avatar *@
+                <svg width="48" height="48" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <rect width="24" height="24" rx="6" fill="#2c7be5"></rect>
+                    <g fill="#fff">
+                        <circle cx="12" cy="8" r="3.2"></circle>
+                        <path d="M6.2 19a6.8 6.8 0 0 1 11.6 0" transform="translate(0,0)"></path>
+                    </g>
+                </svg>
+            }
+        </div>
+        <div class="alumno-info">
+            <div class="alumno-name">@alumnoNombre</div>
+            <div class="alumno-id">Alumno · @alumnoId</div>
+        </div>
+    </div>
+
+    <ul class="alumno-menu-grid" role="menu">
+        <li role="none">
+            <a role="menuitem" class="menu-item @(isActive("Ficha", "Alumnos") ? "active" : "")" href="@Url.Action("Ficha", "Alumnos")">
+                @* SVG icon: ficha *@
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6 2h7l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zM13 3.5V9h5.5L13 3.5zM8 11h8v1H8v-1zm0 3h8v1H8v-1z" /></svg>
+                <span class="label">Mi ficha</span>
+            </a>
+        </li>
+
+        <li role="none">
+            <a role="menuitem" class="menu-item @(isActive("Materias", "Alumnos") ? "active" : "")" href="@Url.Action("Materias", "Alumnos")">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2L2 7v6c0 5 4 9 10 9s10-4 10-9V7l-10-5zM12 4.2 19 8v5c0 3.9-3.1 7-7 7s-7-3.1-7-7V8l7-3.8z" /></svg>
+                <span class="label">Materias</span>
+            </a>
+        </li>
+
+        <li role="none">
+            <a role="menuitem" class="menu-item @(isActive("Calificaciones", "Alumnos") ? "active" : "")" href="@Url.Action("Calificaciones", "Alumnos")">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z" /></svg>
+                <span class="label">Calificaciones</span>
+            </a>
+        </li>
+
+        <li role="none">
+            <a role="menuitem" class="menu-item @(isActive("Asistencias", "Alumnos") ? "active" : "")" href="@Url.Action("Inasistencias", "Alumnos")">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 .001 20.001A10 10 0 0 0 12 2zm1 11H7v-2h6V7h2v6z" /></svg>
+                <span class="label">Inasistencias</span>
+                @if (faltas > 0)
+                {
+                    <span class="badge">@faltas</span>
+                }
+            </a>
+        </li>
+
+        <li role="none">
+            <a role="menuitem" class="menu-item @(isActive("Cronograma", "Alumnos") ? "active" : "")" href="@Url.Action("Cronograma", "Alumnos")">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 10h5v5H7v-5zm-4-6h2V2h2v2h8V2h2v2h2v18H3V4z" /></svg>
+                <span class="label">Calendario</span>
+            </a>
+        </li>
+
+        <li role="none">
+            <a role="menuitem" class="menu-item @(isActive("Alumnos", "Alumnos") ? "active" : "")" href="@Url.Action("Alumnos", "Alumnos")">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2L2 7v6c0 5 4 9 10 9s10-4 10-9V7l-10-5z" /></svg>
+                <span class="label">Listado</span>
+            </a>
+        </li>
+
+        <li role="none">
+            <a role="menuitem" class="menu-item @(isActive("Mensajes", "Alumnos") ? "active" : "")" href="@Url.Action("Mensajes", "Alumnos")">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20 4H4a2 2 0 0 0-2 2v12l4-4h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z" /></svg>
+                <span class="label">Mensajes</span>
+                @if (mensajes > 0)
+                {
+                    <span class="badge">@mensajes</span>
+                }
+            </a>
+        </li>
+
+        <li role="none">
+            <a role="menuitem" class="menu-item @(isActive("Avisos", "Alumnos") ? "active" : "")" href="@Url.Action("Avisos", "Alumnos")">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7v5H3v2h18v-2h-2V9a7 7 0 0 0-7-7z" /></svg>
+                <span class="label">Avisos</span>
+                @if (avisos > 0)
+                {
+                    <span class="badge">@avisos</span>
+                }
+            </a>
+        </li>
+
+        <li role="none">
+            <a role="menuitem" class="menu-item @(isActive("Perfil", "Alumnos") ? "active" : "")" href="@Url.Action("Perfil", "Alumnos")">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 12a5 5 0 1 0 .001-10.001A5 5 0 0 0 12 12zm0 2c-4 0-7 3-7 7h14c0-4-3-7-7-7z" /></svg>
+                <span class="label">Perfil</span>
+            </a>
+        </li>
+
+        <li role="none">
+            <a role="menuitem" class="menu-item support @(isActive("Soporte", "Alumnos") ? "active" : "")" href="@Url.Action("Soporte", "Alumnos")">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 .001 20.001A10 10 0 0 0 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" /></svg>
+                <span class="label">Soporte</span>
+            </a>
+        </li>
+    </ul>
+
+    <div class="alumno-quick-actions">
+        <a class="qa-btn" href="@Url.Action("Tareas", "Alumnos")">Ver tareas</a>
+        <a class="qa-btn outline" href="@Url.Action("Mensajes", "Alumnos")">Enviar mensaje</a>
+    </div>
+</nav>

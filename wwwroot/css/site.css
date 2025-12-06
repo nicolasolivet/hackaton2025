@@ -155,3 +155,307 @@ body {
         font-size: .95rem;
     }
 }
+.alumno-menu {
+    background: linear-gradient(180deg, #f7fbff, #f1f6ff);
+    border-radius: 12px;
+    padding: 14px;
+    max-width: 1100px;
+    margin: 18px auto;
+    box-shadow: 0 8px 24px rgba(20,40,80,0.06);
+    color: #0f1724;
+}
+
+.alumno-menu-header {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(15,20,36,0.06);
+    margin-bottom: 12px;
+}
+
+.alumno-avatar {
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(180deg,#2c7be5,#1a62c8);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.alumno-info .alumno-name {
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.alumno-info .alumno-id {
+    font-size: 13px;
+    color: #475569;
+}
+
+/* Grid de items */
+.alumno-menu-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+}
+
+.menu-item {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    background: white;
+    padding: 10px 12px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: #0f1724;
+    font-weight: 600;
+    transition: transform .12s ease, box-shadow .12s ease;
+    box-shadow: 0 6px 14px rgba(10,20,40,0.04);
+}
+
+    .menu-item .mi {
+        font-size: 18px;
+        width: 22px;
+        text-align: center;
+    }
+
+    .menu-item .label {
+        flex: 1;
+    }
+
+    /* hover / focus */
+    .menu-item:hover, .menu-item:focus {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 28px rgba(12,24,48,0.08);
+        text-decoration: none;
+    }
+
+    /* active state */
+    .menu-item.active {
+        background: linear-gradient(180deg,#e8f4ff,#d6ebff);
+        border: 1px solid rgba(44,123,229,0.12);
+        box-shadow: 0 10px 26px rgba(30,80,150,0.06);
+    }
+
+    /* support special */
+    .menu-item.support {
+        background: linear-gradient(180deg,#fff4e6,#fff1da);
+    }
+
+/* quick actions */
+.alumno-quick-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 12px;
+}
+
+.qa-btn {
+    padding: 9px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    background: linear-gradient(180deg,#17c964,#0fa657);
+    color: #fff;
+    font-weight: 700;
+}
+
+    .qa-btn.outline {
+        background: transparent;
+        border: 1px solid rgba(15,20,36,0.06);
+        color: #0f1724;
+    }
+
+/* small screens */
+@media (max-width:720px) {
+    .alumno-quick-actions {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .alumno-menu {
+        padding: 12px;
+    }
+
+    .alumno-menu-header {
+        gap: 10px;
+    }
+
+    .menu-item {
+        padding: 10px;
+    }
+}
+/* ---------- ALUMNO MENU (mejoras badges y SVG) ---------- */
+.alumno-menu .icon {
+    width: 20px;
+    height: 20px;
+    flex: 0 0 22px;
+    color: #0f1724;
+}
+
+.alumno-menu .badge {
+    background: #ef4444;
+    color: white;
+    font-weight: 700;
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    margin-left: 8px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* ajustar espacios de label para que el badge quede alineado */
+.alumno-menu-grid .menu-item {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+    .alumno-menu-grid .menu-item .label {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+/* support color tweak */
+.menu-item.support {
+    background: linear-gradient(180deg,#fff4e6,#fff1da);
+}
+
+/* responsive badge smaller */
+@media (max-width:480px) {
+    .alumno-menu .badge {
+        font-size: 11px;
+        padding: 2px 6px;
+    }
+}
+
+/* --- Layout helpers: content + footer spacing --- */
+.site-content {
+    /* espacio general arriba/abajo */
+    padding: 24px 20px;
+    /* deja espacio extra abajo para que el footer no lo cubra */
+    padding-bottom: 120px;
+    box-sizing: border-box;
+    min-height: calc(100vh - 120px); /* fuerza que el contenido ocupe la pantalla menos footer */
+}
+
+/* Footer: por defecto estático (no fijo) */
+.site-footer {
+    width: 100%;
+    padding: 14px 20px;
+    background: #fff;
+    border-top: 1px solid #eee;
+    color: #334155;
+    box-sizing: border-box;
+    position: relative; /* evita solapamiento */
+}
+
+/* Si tenías un footer fixed antes, quítale position: fixed; o usa la regla siguiente */
+/* .site-footer { position: fixed; bottom:0; left:0; right:0; } 
+   En ese caso necesitas body padding-bottom igual a la altura del footer. See below. */
+
+/* Hacer las tablas scrollables en pantallas pequeñas */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
+/* Ajustes para la tabla y filas que "salían" */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto;
+}
+
+/* Imagen avatar en la tabla para que no estire filas */
+.table td img, .table th img {
+    max-width: 48px;
+    height: auto;
+    display: block;
+    border-radius: 6px;
+}
+
+/* Espaciado extra entre secciones */
+.alumno-menu {
+    margin-bottom: 20px;
+}
+
+.container {
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Si querés footer fijo: añade espacio en body para que no tape contenido */
+body.footer-fixed {
+    padding-bottom: 80px;
+}
+/* ajustar 80px por la altura del footer */
+.btn-quiz {
+    background: linear-gradient(180deg,#f0f7ff,#dfefff);
+    border: 1px solid #cbe0ff;
+    color: #0353a4;
+}
+
+.btn-games {
+    background: linear-gradient(180deg,#fff7ed,#fff2da);
+    border: 1px solid #ffd7a6;
+    color: #7a4b00;
+}
+
+.btn-chat {
+    background: linear-gradient(180deg,#f0fff4,#dcffe6);
+    border: 1px solid #b6f0c2;
+    color: #0f5132;
+}
+
+.card.h-100 .mt-auto {
+    margin-top: auto;
+}
+
+.d-flex.gap-2 {
+    gap: .5rem;
+}
+/* botones grandes en MateriaDetalle */
+.big-action {
+    display: inline-block;
+    min-width: 190px;
+    padding: 14px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    border: 1px solid rgba(0,0,0,0.08);
+    box-shadow: 0 6px 20px rgba(29, 40, 56, 0.04);
+    color: #111;
+}
+
+/* colores distintos */
+.btn-quiz-lg {
+    background: linear-gradient(180deg,#f0f7ff,#dfefff);
+    color: #054a8a;
+}
+
+.btn-games-lg {
+    background: linear-gradient(180deg,#fff7ed,#fff2da);
+    color: #7a4b00;
+}
+
+.btn-chat-lg {
+    background: linear-gradient(180deg,#f0fff4,#dcffe6);
+    color: #0f5132;
+}
+
+/* responsive: apilan si pantalla chica */
+@media (max-width: 720px) {
+    .big-action {
+        width: 100%;
+        text-align: center;
+    }
+}

@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "Avisos";
+}
+@await Html.PartialAsync("AlumnoMenu")
+
+<div class="container mt-3">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Avisos</h2>
+        <a class="btn btn-outline-secondary" href="#">Ver archivados</a>
+    </div>
+
+    <div class="list-group">
+        @* Reemplazar con loop *@
+        <a href="#" class="list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Reunión de padres</h5>
+                <small>Hoy</small>
+            </div>
+            <p class="mb-1">La reunión será en el auditorio a las 18:00. Se ruega puntualidad.</p>
+            <small>Emitido por Secretaría</small>
+        </a>
+
+        <a href="#" class="list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Cambio de fecha: examen</h5>
+                <small>2 días</small>
+            </div>
+            <p class="mb-1">El examen de Historia se pasa al viernes 12/12.</p>
+            <small>Emitido por Profesorado</small>
+        </a>
+    </div>
+</div>

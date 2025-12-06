@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = "Calificaciones";
+}
+@await Html.PartialAsync("AlumnoMenu")
+
+<div class="container mt-3">
+    <h2>Calificaciones</h2>
+
+    <div class="mb-3 d-flex gap-2">
+        <select class="form-control" style="width:160px">
+            <option>Año</option>
+            <option>1º</option>
+            <option>2º</option>
+        </select>
+        <select class="form-control" style="width:160px">
+            <option>Periodo</option>
+            <option>1er trimestre</option>
+            <option>2do trimestre</option>
+        </select>
+    </div>
+
+    <table class="table table-bordered">
+        <thead class="thead-light">
+            <tr>
+                <th>Materia</th>
+                <th>Evaluación</th>
+                <th>Nota</th>
+                <th>Fecha</th>
+                <th>Profesor</th>
+            </tr>
+        </thead>
+        <tbody>
+            @* Loop Razor con notas *@
+            <tr>
+                <td>Matemática</td>
+                <td>Trabajo práctico</td>
+                <td>8.5</td>
+                <td>2025-11-20</td>
+                <td>Lic. López</td>
+            </tr>
+            <tr>
+                <td>Lengua</td>
+                <td>Examen</td>
+                <td>7</td>
+                <td>2025-10-05</td>
+                <td>Mg. García</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

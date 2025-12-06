@@ -1,0 +1,44 @@
+﻿@{
+    ViewData["Title"] = "Tareas";
+}
+@await Html.PartialAsync("AlumnoMenu")
+
+<div class="container mt-3">
+    <div class="d-flex justify-content-between align-items-center">
+        <h2>Tareas</h2>
+        <a class="btn btn-primary" href="#">Nueva tarea</a>
+    </div>
+
+    <div class="mb-3">
+        <select class="form-control" style="width:200px;">
+            <option>Todas</option>
+            <option>Pendientes</option>
+            <option>Entregadas</option>
+            <option>Revisadas</option>
+        </select>
+    </div>
+
+    <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
+                <strong>Resolver ejercicios - Matemática</strong><br />
+                <small>Fecha entrega: 2025-12-01</small>
+            </div>
+            <div>
+                <span class="badge badge-danger">Pendiente</span>
+                <a class="btn btn-sm btn-outline-secondary ms-2" href="#">Entregar</a>
+            </div>
+        </li>
+
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
+                <strong>Leer capítulo 5 - Historia</strong><br />
+                <small>Fecha entrega: 2025-11-18</small>
+            </div>
+            <div>
+                <span class="badge badge-success">Entregada</span>
+                <a class="btn btn-sm btn-outline-secondary ms-2" href="#">Ver entrega</a>
+            </div>
+        </li>
+    </ul>
+</div>

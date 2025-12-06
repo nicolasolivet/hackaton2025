@@ -1,0 +1,77 @@
+﻿@{
+    ViewData["Title"] = "Quiz";
+}
+@await Html.PartialAsync("AlumnoMenu")
+
+<div class="container mt-4">
+    <h2>Quiz - Materia @ViewBag.MateriaId</h2>
+
+    <div id="quizContainer" class="mt-3">
+        @{
+            var preguntas = (IEnumerable<dynamic>)ViewBag.Preguntas;
+            int idx = 0;
+        }
+        @if (preguntas == null || !preguntas.Any())
+        {
+            <div class="alert alert-info">No hay preguntas para esta materia.</div>
+        }
+        else
+        {
+            foreach (var p in preguntas)
+            {
+                <div class="card mb-3 question" data-answer="@p.Respuesta" @(idx == 0 ? "" : "style=\"display:none;\"")>
+                    <div class="card-body">
+                        <h5>@p.Pregunta</h5>
+                        <div class="mt-2">
+                            @for (int i = 0; i < p.Opciones.Length; i++)
+                            {
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="q@idx" id="q@idx-opt@i" value="@i" />
+                                    <label class="form-check-label" for="q@idx-opt@i">@p.Opciones[i]</label>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                idx++;
+            }
+            <div class="d-flex gap-2">
+                <button id="prevBtn" class="btn btn-secondary" disabled>Anterior</button>
+                <button id="nextBtn" class="btn btn-primary">Siguiente</button>
+                <a class="btn btn-outline-secondary ms-auto" href="@Url.Action("MateriaDetalle", "Alumnos", new { id = ViewBag.MateriaId })">Volver a materia</a>
+            </div>
+            <div id="quizResult" class="mt-3" style="display:none;"></div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        (function(){
+            const questions = Array.from(document.querySelectorAll('.question'));
+            if(!questions.length) return;
+            let cur = 0;
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const resultBox = document.getElementById('quizResult');
+            function show(i){
+                questions.forEach((q, idx) => q.style.display = idx === i ? '' : 'none');
+                prevBtn.disabled = i === 0;
+                nextBtn.textContent = i === questions.length - 1 ? 'Terminar' : 'Siguiente';
+            }
+            prevBtn.addEventListener('click', () => { if(cur>0){ cur--; show(cur); }});
+            nextBtn.addEventListener('click', () => {
+                if(cur < questions.length -1){ cur++; show(cur); return; }
+                let score = 0;
+                questions.forEach((q, idx) => {
+                    const correct = parseInt(q.dataset.answer,10);
+                    const checked = q.querySelector('input[type=radio]:checked');
+                    if(checked && parseInt(checked.value,10) === correct) score++;
+                });
+                resultBox.style.display = '';
+                resultBox.innerHTML = `<div class="alert alert-info">Tu puntaje: ${score} de ${questions.length}</div>`;
+            });
+            show(0);
+        })();
+    </script>
+}

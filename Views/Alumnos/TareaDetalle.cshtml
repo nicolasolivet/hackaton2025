@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "Detalle de Tarea";
+}
+
+@await Html.PartialAsync("AlumnoMenu")
+
+<h1 class="text-center">Tarea @ViewBag.TareaId</h1>
+
+<div class="container mt-4">
+
+    <div class="card p-4 shadow-sm">
+        <h3>Título de la tarea</h3>
+
+        <p><strong>Materia:</strong> Matemática</p>
+        <p><strong>Fecha de entrega:</strong> 10/12/2025</p>
+
+        <p><strong>Descripción:</strong></p>
+        <p>
+            Resolver los ejercicios 1 al 10 de la página 34.
+        </p>
+
+        <a class="btn btn-success mt-3" href="#">
+            Marcar como completada
+        </a>
+    </div>
+
+</div>

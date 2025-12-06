@@ -1,0 +1,37 @@
+﻿@{
+    ViewData["Title"] = "Asistencias";
+}
+@await Html.PartialAsync("AlumnoMenu")
+
+<div class="container mt-3">
+    <h2>Inasistencias</h2>
+
+    <div class="mb-3">
+        <a class="btn btn-primary" href="#">Solicitar justificación</a>
+    </div>
+
+    <table class="table table-sm">
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Materia</th>
+                <th>Motivo</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>2025-10-10</td>
+                <td>Matemática</td>
+                <td>Enfermedad</td>
+                <td><span class="badge badge-warning">Pendiente</span></td>
+            </tr>
+            <tr>
+                <td>2025-09-02</td>
+                <td>Educ. Física</td>
+                <td>Actividad deportiva</td>
+                <td><span class="badge badge-success">Aprobada</span></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

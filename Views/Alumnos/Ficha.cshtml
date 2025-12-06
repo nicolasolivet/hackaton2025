@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Ficha";
+}
+@await Html.PartialAsync("AlumnoMenu")
+
+<div class="container mt-3">
+    <h2>Mi ficha</h2>
+
+    <div class="row">
+        <div class="col-md-4">
+            <img src="/images/avatar-placeholder.png" class="img-fluid rounded mb-3" alt="Avatar" />
+            <p><strong>ID:</strong> A-1023</p>
+            <p><strong>Curso:</strong> 1ºA</p>
+        </div>
+        <div class="col-md-8">
+            <h5>Datos personales</h5>
+            <p><strong>Nombre:</strong> Juan Pérez</p>
+            <p><strong>Email:</strong> juan@example.com</p>
+            <p><strong>Teléfono:</strong> (011) 1234-5678</p>
+        </div>
+    </div>
+</div>

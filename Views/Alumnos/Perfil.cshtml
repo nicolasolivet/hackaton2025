@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Perfil";
+}
+@await Html.PartialAsync("AlumnoMenu")
+
+<div class="container mt-3">
+    <h2>Perfil</h2>
+
+    <form method="post" action="#" class="row g-3">
+        @* Reemplazar action y usar model-binding si querés *@
+        <div class="col-md-6">
+            <label class="form-label">Nombre completo</label>
+            <input class="form-control" name="Nombre" value="Juan Pérez" />
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Documento</label>
+            <input class="form-control" name="Documento" value="A-1023" />
+        </div>
+        <div class="col-12">
+            <label class="form-label">Email</label>
+            <input class="form-control" name="Email" value="juan@example.com" />
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Teléfono</label>
+            <input class="form-control" name="Telefono" value="(011) 1234-5678" />
+        </div>
+        <div class="col-12">
+            <button class="btn btn-success" type="submit">Guardar cambios</button>
+        </div>
+    </form>
+</div>

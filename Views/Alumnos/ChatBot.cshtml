@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "Chatbot";
+}
+@await Html.PartialAsync("AlumnoMenu")
+
+<div class="container mt-4">
+    <h2>Chatbot - Materia @ViewBag.MateriaId (@ViewBag.MateriaNombre)</h2>
+
+    <div class="card p-3">
+        <div id="chatLog" style="min-height:200px; max-height:400px; overflow:auto; border:1px solid #eee; padding:10px; background:#fafafa;"></div>
+
+        <div class="mt-3 d-flex gap-2">
+            <input id="chatInput" class="form-control" placeholder="Escribí algo..." />
+            <button id="sendBtn" class="btn btn-primary">Enviar</button>
+        </div>
+
+        <div class="mt-3">
+            <a class="btn btn-outline-secondary" href="@Url.Action("MateriaDetalle", "Alumnos", new { id = ViewBag.MateriaId })">Volver a materia</a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        (function(){
+            const chatLog = document.getElementById('chatLog');
+            const input = document.getElementById('chatInput');
+            const btn = document.getElementById('sendBtn');
+            function append(role, text){
+                const el = document.createElement('div');
+                el.style.marginBottom = '8px';
+                el.innerHTML = `<strong>${role}:</strong> ${text}`;
+                chatLog.appendChild(el);
+                chatLog.scrollTop = chatLog.scrollHeight;
+            }
+            btn.addEventListener('click', () => {
+                const v = input.value.trim();
+                if(!v) return;
+                append('Tú', v);
+                setTimeout(()=> append('Bot', 'Echo: ' + v), 500);
+                input.value = '';
+            });
+            input.addEventListener('keypress', function(e){
+                if(e.key === 'Enter'){ btn.click(); }
+            });
+        })();
+    </script>
+}

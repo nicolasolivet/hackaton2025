@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Mensajes";
+}
+@await Html.PartialAsync("AlumnoMenu")
+
+<div class="container mt-3">
+    <h2>Mensajes</h2>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="list-group mb-3">
+                <a href="#" class="list-group-item list-group-item-action active">Profesor López <br /><small>Reunión</small></a>
+                <a href="#" class="list-group-item list-group-item-action">Secretaría</a>
+                <a href="#" class="list-group-item list-group-item-action">Soporte</a>
+            </div>
+            <a class="btn btn-primary btn-block" href="#">Redactar</a>
+        </div>
+
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Asunto: Reunión</h5>
+                    <p class="card-text"><small class="text-muted">De: Profesor López — 2025-12-01</small></p>
+                    <p>Estimado/a, la reunión será el jueves a las 18:00...</p>
+                    <a class="btn btn-outline-primary" href="#">Responder</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

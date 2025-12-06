@@ -1,0 +1,68 @@
+﻿@{
+    ViewData["Title"] = "Detalle de materia";
+}
+
+@await Html.PartialAsync("AlumnoMenu")
+
+<div class="container mt-4">
+
+    @{
+        var materia = (dynamic)ViewBag.Materia;
+        var tareas = (IEnumerable<dynamic>)ViewBag.Tareas;
+        var mid = materia?.Id ?? 0;
+    }
+
+    <!-- botones grandes -->
+    <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-3">
+        <a class="big-action btn-quiz-lg text-center" href="@Url.Action("Quiz", "Alumnos", new { materiaId = mid })">Quiz</a>
+        <a class="big-action btn-games-lg text-center" href="@Url.Action("Juegos", "Alumnos", new { materiaId = mid })">Juegos</a>
+        <a class="big-action btn-chat-lg text-center" href="@Url.Action("Chatbot", "Alumnos", new { materiaId = mid })">ChatBot</a>
+    </div>
+
+    <!-- card info de materia -->
+    <div class="card mb-3">
+        <div class="card-body">
+            <h3>Nombre de la materia: @materia?.Nombre</h3>
+            <p><strong>Profesor:</strong> @materia?.Profesor</p>
+            <p><strong>Curso:</strong> 1ºB</p>
+            <p><strong>Descripción:</strong> @materia?.Descripcion</p>
+
+            <div class="text-end">
+                <a class="btn btn-outline-primary btn-sm" href="@Url.Action("Tareas", "Alumnos", new { /* opcional: materiaId = mid */ })">Ver Tareas</a>
+            </div>
+        </div>
+    </div>
+
+    <hr />
+
+    <h4>Unidades / Contenidos</h4>
+    <ul>
+        <li>Unidad 1 – Introducción</li>
+        <li>Unidad 2 – Tema específico</li>
+        <li>Unidad 3 – Evaluaciones</li>
+    </ul>
+
+    <hr />
+
+    <h4>Tareas de la materia</h4>
+    @if (tareas != null && tareas.Any())
+    {
+        <ul class="list-group mt-2">
+            @foreach (var t in tareas)
+            {
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <strong>@t.Titulo</strong><br />
+                        <small class="text-muted">Entrega: @((DateTime)t.FechaEntrega).ToShortDateString()</small>
+                    </div>
+                    <a class="btn btn-sm btn-outline-secondary" href="@Url.Action("TareaDetalle", "Alumnos", new { id = t.Id })">Ver Tarea</a>
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p class="text-muted">No hay tareas para esta materia.</p>
+    }
+
+</div>

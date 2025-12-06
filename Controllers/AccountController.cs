@@ -24,7 +24,7 @@ namespace ctrlcctrlv.Controllers
             if (username == "test" && password == "test")
             {
                 HttpContext.Session.SetString("UsuarioLogueado", username);
-                return LocalRedirect(returnUrl);
+                return RedirectToAction("MenuTutor", "Tutores");
             }
 
             ModelState.AddModelError("", "Usuario o contraseña incorrectos (usar: test / test).");
