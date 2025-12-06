@@ -1,5 +1,31 @@
 # hackaton2025 | UTN | Colidevs
 
+
+**Para ejecutar la solución:**
+
+1) Instalar Ollama + modelo llama3.1
+
+2) Ejecutar la API
+```bash
+$ cd hackaton2025/APIhackaton
+$ dotnet run
+```
+
+3) Ejecutar el Frontend:
+```bash
+$ cd hackaton2025
+$ dotnet run --project ctrlcctrlv.csproj --launch-profile "http"
+```
+
+Tecnologías
+- .NET
+- Swagger
+- EntityFramework
+- Ollama
+- SQLite
+- Bootstrap
+- JavaScript
+
 # **INFORME DE FUNCIONALIDADES**
 
 ## **1. Introducción General**
